@@ -1,6 +1,7 @@
 import React from 'react';
-import { ShieldCheck, ShieldAlert, RefreshCw, Radio, Plus } from 'lucide-react';
+import { ShieldCheck, ShieldAlert, RefreshCw, Radio, Plus, LogOut, UserCheck, Lock } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { useAuth } from '../context/AuthContext';
 
 interface NavbarProps {
   isOnline: boolean;
@@ -8,6 +9,7 @@ interface NavbarProps {
   totalThreats: number;
   onRefresh: () => void;
   onOpenNewThreat?: () => void;
+  onOpenLogin?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -16,7 +18,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   totalThreats,
   onRefresh,
   onOpenNewThreat,
+  onOpenLogin,
 }) => {
+  const { user, isAuthenticated, logout } = useAuth();
+
   return (
     <header className="sticky top-0 z-30 border-b border-[var(--border-color)] bg-[var(--bg-surface)]/85 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
@@ -81,6 +86,39 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Theme Toggle - Animated Sun/Moon Switch */}
           <ThemeToggle />
+
+          {/* Authenticated User Pill & Logout */}
+          {isAuthenticated && user ? (
+            <div className="flex items-center gap-2 pl-1 border-l border-[var(--border-color)]">
+              <div className="hidden md:flex flex-col items-end text-right">
+                <span className="text-xs font-semibold text-[var(--text-primary)] leading-tight flex items-center gap-1">
+                  <UserCheck className="w-3 h-3 text-cyan-400" />
+                  {user.full_name}
+                </span>
+                <span className="text-[10px] font-mono text-cyan-500 dark:text-cyan-400">
+                  {user.security_clearance.split(' ')[0]}
+                </span>
+              </div>
+              <button
+                onClick={logout}
+                title="Secure SOC Terminal Logout"
+                className="p-1.5 sm:p-2 rounded-lg border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 transition cursor-pointer flex items-center gap-1 text-xs font-mono"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Exit</span>
+              </button>
+            </div>
+          ) : (
+            onOpenLogin && (
+              <button
+                onClick={onOpenLogin}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/15 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-500/25 transition cursor-pointer font-mono"
+              >
+                <Lock className="w-3.5 h-3.5" />
+                <span>2FA Login</span>
+              </button>
+            )
+          )}
 
           {/* New Threat Button */}
           {onOpenNewThreat && (

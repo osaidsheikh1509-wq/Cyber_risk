@@ -6,8 +6,10 @@ from app.core.config import get_settings
 from app.core.database import Base, engine, SessionLocal
 from app.models.risk import RiskItem
 from app.models.threat import Threat, TimelineEvent
+from app.models.user import User, TwoFactorSession
 from app.core.seed import seed_threats_if_empty
-from app.api.v1.endpoints import health, risks, threats, stats, ai, voice
+from app.api.v1.endpoints import health, risks, threats, stats, ai, voice, auth
+from app.api.v1.endpoints.auth import seed_demo_users_if_empty
 
 settings = get_settings()
 
@@ -75,6 +77,7 @@ async def lifespan(app: FastAPI):
         Base.metadata.create_all(bind=engine)
         seed_threats_if_empty()
         seed_initial_risks()
+        seed_demo_users_if_empty()
     yield
     # Shutdown
     close_mongo_client()
@@ -98,7 +101,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount endpoints under both root /threats, /stats and /api/v1/threats, /api/v1/stats
+# Mount endpoints under both root and /api/v1
+app.include_router(auth.router, prefix="/auth", tags=["Authentication & 2FA"])
+app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication & 2FA"])
+
 app.include_router(threats.router, prefix="/threats", tags=["Threats"])
 app.include_router(threats.router, prefix="/api/v1/threats", tags=["Threats"])
 

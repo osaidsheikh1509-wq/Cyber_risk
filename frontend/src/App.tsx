@@ -11,6 +11,8 @@ import { ConfirmDialog } from './components/ConfirmDialog';
 import { ToastContainer, ToastMessage } from './components/Toast';
 import { FanCards } from './components/FanCards';
 import { SpokenBriefingModal } from './components/SpokenBriefingModal';
+import { DoubleVerificationLogin } from './components/DoubleVerificationLogin';
+import { useAuth } from './context/AuthContext';
 import {
   fetchThreats,
   fetchThreatStats,
@@ -58,6 +60,10 @@ export const App: React.FC = () => {
   const [editingThreat, setEditingThreat] = useState<Threat | null>(null);
   const [voiceReadyModal, setVoiceReadyModal] = useState<boolean>(false);
   const [isSpokenBriefingModalOpen, setIsSpokenBriefingModalOpen] = useState<boolean>(false);
+
+  // Authentication & Double Verification State
+  const { isAuthenticated, user, isLoading: authLoading } = useAuth();
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
 
   // Delete Confirmation Dialog state
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
@@ -261,6 +267,7 @@ export const App: React.FC = () => {
         totalThreats={stats?.total_threats || 0}
         onRefresh={() => loadData(filters)}
         onOpenNewThreat={handleOpenNewThreat}
+        onOpenLogin={() => setIsLoginModalOpen(true)}
       />
 
       {/* Main Content: View Switcher */}
@@ -516,6 +523,16 @@ export const App: React.FC = () => {
         threats={threats}
         onNavigateToDetail={navigateToDetail}
       />
+
+      {/* Double Verification 2FA Login Modal */}
+      {(!isAuthenticated || isLoginModalOpen) && !authLoading && (
+        <DoubleVerificationLogin
+          onSuccess={() => {
+            setIsLoginModalOpen(false);
+            addToast('success', `Double verification complete. SOC terminal access granted for ${user?.full_name || 'Operator'}.`);
+          }}
+        />
+      )}
 
       {/* Toast Notification Stack */}
       <ToastContainer toasts={toasts} onDismiss={handleDismissToast} />
