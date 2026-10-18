@@ -7,6 +7,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 ENV_PATH = BASE_DIR / ".env"
 
 
+import os
+
+def get_default_database_url() -> str:
+    if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+        return "sqlite:////tmp/cyber_risk.db"
+    return "sqlite:///./cyber_risk.db"
+
+
 class Settings(BaseSettings):
     APP_NAME: str = "Cyber Risk Tracker API"
     APP_ENV: str = "development"
@@ -14,13 +22,13 @@ class Settings(BaseSettings):
     PORT: int = 8000
     HOST: str = "127.0.0.1"
 
-    DATABASE_URL: str = "sqlite:///./cyber_risk.db"
+    DATABASE_URL: str = get_default_database_url()
     DB_BACKEND: str = "sqlite"  # "sqlite" or "mongo"
     DB_FALLBACK: bool = False   # If True, fall back to SQLite when Mongo connection fails
     MONGODB_URI: str | None = None
     MONGODB_DB: str = "cyber_risk_tracker"
     SECRET_KEY: str = "cyber-risk-tracker-dev-insecure-secret-key-change-me"
-    ALLOWED_ORIGINS: str = "http://localhost:5173,http://127.0.0.1:5173"
+    ALLOWED_ORIGINS: str = "http://localhost:5173,http://127.0.0.1:5173,*"
 
     SARVAM_API_KEY: str | None = None
     SARVAM_BASE_URL: str = "https://api.sarvam.ai"

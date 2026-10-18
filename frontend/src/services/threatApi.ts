@@ -10,8 +10,9 @@ import {
   PaginatedThreats,
 } from '../types/threat';
 
-// Vite proxy routes /threats and /stats to http://127.0.0.1:8000
-const API_BASE = '';
+// In local dev, Vite proxy routes /threats and /stats to http://127.0.0.1:8000.
+// In production, VITE_API_BASE_URL can point to a remote backend or default to relative path for serverless rewrites.
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
 
 export async function fetchThreats(filters?: ThreatFilters): Promise<PaginatedThreats> {
   const params = new URLSearchParams();
