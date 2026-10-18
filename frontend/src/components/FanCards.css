@@ -1,0 +1,251 @@
+/* Glass Fan Cards Showcase Styling */
+
+.fan-cards-section {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.fan-cards-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  padding: 0 0.5rem;
+}
+
+.fan-cards-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0 1.5rem 0;
+  border-radius: 1.25rem;
+  background: radial-gradient(circle at 50% 30%, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
+  border: 1px solid rgba(51, 65, 85, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Light mode wrapper variant */
+:root[data-theme="light"] .fan-cards-wrapper {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(241, 245, 249, 0.95) 100%);
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Fan Cards Container (Renamed from .container to avoid Tailwind clash) */
+.fan-cards {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 230px;
+  perspective: 1000px;
+}
+
+/* Glass Card */
+.fan-cards .glass {
+  position: relative;
+  width: 190px;
+  height: 210px;
+  background: linear-gradient(rgba(255, 255, 255, 0.12), transparent);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 25px 25px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 38px; /* space for the bottom label */
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              margin 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease,
+              background 0.3s ease;
+  border-radius: 12px;
+  margin: 0 -45px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transform: rotate(calc(var(--r) * 1deg));
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+/* Light mode glass card variant */
+:root[data-theme="light"] .fan-cards .glass {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.85));
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Hover Spread on desktop */
+.fan-cards:hover .glass {
+  transform: rotate(0deg);
+  margin: 0 12px;
+}
+
+/* Individual card hover focus */
+.fan-cards .glass:hover {
+  transform: translateY(-8px) scale(1.04) rotate(0deg);
+  border-color: rgba(6, 182, 212, 0.6);
+  box-shadow: 0 20px 35px rgba(6, 182, 212, 0.25), 0 0 20px rgba(6, 182, 212, 0.2);
+  z-index: 10;
+}
+
+:root[data-theme="light"] .fan-cards .glass:hover {
+  border-color: rgba(8, 145, 178, 0.7);
+  box-shadow: 0 18px 30px rgba(8, 145, 178, 0.15), 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Card bottom label using data-text */
+.fan-cards .glass::before {
+  content: attr(data-text);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+:root[data-theme="light"] .fan-cards .glass::before {
+  background: rgba(241, 245, 249, 0.95);
+  border-top: 1px solid rgba(226, 232, 240, 0.9);
+  color: #0f172a;
+}
+
+.fan-cards .glass:hover::before {
+  background: rgba(6, 182, 212, 0.25);
+  color: #a5f3fc;
+}
+
+:root[data-theme="light"] .fan-cards .glass:hover::before {
+  background: rgba(8, 145, 178, 0.15);
+  color: #0e7490;
+}
+
+/* Lucide Icon within glass cards */
+.fan-cards .glass svg {
+  color: #ffffff;
+  fill: #ffffff;
+  transition: transform 0.3s ease, color 0.3s ease, fill 0.3s ease;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+:root[data-theme="light"] .fan-cards .glass svg {
+  color: #0891b2;
+  fill: #0891b2;
+  filter: drop-shadow(0 2px 4px rgba(8, 145, 178, 0.2));
+}
+
+.fan-cards .glass:hover svg {
+  transform: scale(1.12);
+  color: #22d3ee;
+  fill: #22d3ee;
+}
+
+:root[data-theme="light"] .fan-cards .glass:hover svg {
+  color: #0e7490;
+  fill: #0e7490;
+}
+
+/* Secondary helper subtitle inside glass cards */
+.fan-cards .glass .card-subtext {
+  font-size: 0.65rem;
+  color: rgba(203, 213, 225, 0.75);
+  margin-top: 0.5rem;
+  text-align: center;
+  padding: 0 0.75rem;
+  line-height: 1.25;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  transition: color 0.3s ease;
+}
+
+:root[data-theme="light"] .fan-cards .glass .card-subtext {
+  color: #64748b;
+}
+
+.fan-cards .glass:hover .card-subtext {
+  color: #e2e8f0;
+}
+
+:root[data-theme="light"] .fan-cards .glass:hover .card-subtext {
+  color: #334155;
+}
+
+/* Action hint pill on hover */
+.fan-cards .glass .card-action-hint {
+  font-size: 0.6rem;
+  font-mono: true;
+  color: #38bdf8;
+  margin-top: 0.35rem;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+:root[data-theme="light"] .fan-cards .glass .card-action-hint {
+  color: #0284c7;
+}
+
+.fan-cards .glass:hover .card-action-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive: Mobile view under 768px (no overlap, no rotation, horizontal scroll) */
+@media (max-width: 767px) {
+  .fan-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 1rem;
+    width: 100%;
+    overflow-x: auto;
+    padding: 0.5rem 0.75rem 1rem 0.75rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(6, 182, 212, 0.3) transparent;
+    -webkit-overflow-scrolling: touch;
+    min-height: auto;
+  }
+
+  .fan-cards .glass {
+    flex: 0 0 170px;
+    width: 170px;
+    height: 185px;
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  .fan-cards:hover .glass {
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  .fan-cards .glass:active {
+    transform: scale(0.97) !important;
+    border-color: rgba(6, 182, 212, 0.6);
+  }
+
+  .fan-cards .glass .card-action-hint {
+    opacity: 0.9;
+    transform: none;
+  }
+}

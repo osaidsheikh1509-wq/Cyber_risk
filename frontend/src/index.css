@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme Design Tokens */
+:root {
+  color-scheme: light;
+  --bg-primary: #f8fafc;           /* slate-50 */
+  --bg-surface: #ffffff;           /* pure white */
+  --bg-surface-elevated: #f1f5f9;  /* slate-100 */
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
+  --bg-card-subtle: #f1f5f9;
+  --bg-input: #ffffff;
+  --border-color: #e2e8f0;          /* slate-200 */
+  --border-subtle: #cbd5e1;        /* slate-300 */
+  --text-primary: #0f172a;         /* slate-900 */
+  --text-secondary: #334155;       /* slate-700 */
+  --text-muted: #64748b;           /* slate-500 */
+  --accent-primary: #0891b2;       /* cyan-600 */
+  --accent-hover: #0e7490;         /* cyan-700 */
+  --accent-subtle: #e0f2fe;        /* sky-100 */
+  --accent-text: #0e7490;
+
+  /* Risk levels for light mode (WCAG AA compliant contrast) */
+  --risk-critical-text: #be123c;   /* rose-700 */
+  --risk-critical-bg: #ffe4e6;     /* rose-100 */
+  --risk-critical-border: #fca5a5; /* red-300 */
+  --risk-critical-bar: #e11d48;    /* rose-600 */
+
+  --risk-high-text: #b45309;       /* amber-700 */
+  --risk-high-bg: #fef3c7;         /* amber-100 */
+  --risk-high-border: #fcd34d;     /* amber-300 */
+  --risk-high-bar: #d97706;        /* amber-600 */
+
+  --risk-medium-text: #a16207;     /* yellow-700 */
+  --risk-medium-bg: #fef9c3;       /* yellow-100 */
+  --risk-medium-border: #fde047;   /* yellow-300 */
+  --risk-medium-bar: #ca8a04;      /* yellow-600 */
+
+  --risk-low-text: #047857;        /* emerald-700 */
+  --risk-low-bg: #d1fae5;          /* emerald-100 */
+  --risk-low-border: #6ee7b7;      /* emerald-300 */
+  --risk-low-bar: #059669;         /* emerald-600 */
+
+  /* Shadows */
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-elevated: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 15px rgba(8, 145, 178, 0.15);
+
+  /* Chart tokens */
+  --chart-grid: #e2e8f0;
+  --chart-axis: #64748b;
+  --chart-tooltip-bg: #ffffff;
+  --chart-tooltip-border: #cbd5e1;
+  --chart-tooltip-text: #0f172a;
+
+  /* Scrollbar */
+  --scrollbar-track: #f1f5f9;
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb-hover: #94a3b8;
+}
+
+:root[data-theme="dark"],
+.dark {
+  color-scheme: dark;
+  --bg-primary: #070b14;
+  --bg-surface: #0b1329;
+  --bg-surface-elevated: #0f172a;
+  --bg-card: rgba(15, 23, 42, 0.7);
+  --bg-card-hover: rgba(30, 41, 59, 0.8);
+  --bg-card-subtle: #090e1c;
+  --bg-input: #090e1c;
+  --border-color: rgba(51, 65, 85, 0.7);
+  --border-subtle: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --accent-primary: #06b6d4;
+  --accent-hover: #22d3ee;
+  --accent-subtle: rgba(8, 51, 68, 0.6);
+  --accent-text: #22d3ee;
+
+  /* Risk levels for dark mode */
+  --risk-critical-text: #fda4af;
+  --risk-critical-bg: rgba(136, 19, 55, 0.65);
+  --risk-critical-border: rgba(225, 29, 72, 0.6);
+  --risk-critical-bar: #f43f5e;
+
+  --risk-high-text: #fcd34d;
+  --risk-high-bg: rgba(120, 53, 15, 0.65);
+  --risk-high-border: rgba(217, 119, 6, 0.6);
+  --risk-high-bar: #f59e0b;
+
+  --risk-medium-text: #fde047;
+  --risk-medium-bg: rgba(113, 63, 18, 0.65);
+  --risk-medium-border: rgba(202, 138, 4, 0.6);
+  --risk-medium-bar: #eab308;
+
+  --risk-low-text: #67e8f9;
+  --risk-low-bg: rgba(8, 51, 68, 0.65);
+  --risk-low-border: rgba(14, 116, 144, 0.6);
+  --risk-low-bar: #06b6d4;
+
+  /* Shadows */
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+  --shadow-elevated: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 20px rgba(6, 182, 212, 0.25);
+
+  /* Chart tokens */
+  --chart-grid: #1e293b;
+  --chart-axis: #64748b;
+  --chart-tooltip-bg: rgba(8, 14, 28, 0.95);
+  --chart-tooltip-border: rgba(6, 182, 212, 0.5);
+  --chart-tooltip-text: #f8fafc;
+
+  /* Scrollbar */
+  --scrollbar-track: #0b1329;
+  --scrollbar-thumb: #1e293b;
+  --scrollbar-thumb-hover: #334155;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Smooth color transition on theme change (about 300ms) */
+body,
+header,
+main,
+footer,
+div,
+section,
+button,
+input,
+select,
+textarea {
+  transition: background-color 300ms ease, border-color 300ms ease, color 300ms ease, box-shadow 300ms ease;
+}
+
+/* Disabled when prefers-reduced-motion is set */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Custom scrollbar respecting theme tokens */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}

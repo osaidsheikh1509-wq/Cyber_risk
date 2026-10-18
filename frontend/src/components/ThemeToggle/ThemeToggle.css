@@ -1,0 +1,105 @@
+/* ThemeToggle Switch Styling - Alexruix animated sun/moon variant */
+
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* Hide default HTML checkbox */
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+/* The slider track (Unchecked: Dark mode / Night sky with #28096b) */
+.theme-switch__slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #28096b;
+  background: linear-gradient(135deg, #1b074a 0%, #28096b 60%, #3e168f 100%);
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  border-radius: 30px;
+  border: 1px solid rgba(147, 51, 234, 0.4);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(40, 9, 107, 0.4);
+  overflow: hidden;
+}
+
+/* Star specks visible in night sky (dark mode) */
+.theme-switch__slider::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 9px;
+  width: 2px;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: -5px 7px 0 -0.5px #e2e8f0, -12px 3px 0 -0.5px #ffffff, -8px 12px 0 -0.5px #cbd5e1;
+  opacity: 0.85;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* The slider thumb: Crescent Moon by default (unchecked = dark mode) */
+.theme-switch__slider::before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 3px;
+  border-radius: 50%;
+  background-color: transparent;
+  box-shadow: inset 6px -2px 0 0 #f8fafc;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.6));
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.35s ease,
+              box-shadow 0.35s ease,
+              filter 0.35s ease;
+}
+
+/* Checked state = Light mode (Sun active, daytime gradient with #522ba7 adjusted to sky/indigo) */
+.theme-switch input:checked + .theme-switch__slider {
+  background-color: #522ba7;
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 60%, #522ba7 100%);
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 0 12px rgba(56, 189, 248, 0.35);
+}
+
+/* Stars fade out in daytime */
+.theme-switch input:checked + .theme-switch__slider::after {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* Sun thumb in light mode */
+.theme-switch input:checked + .theme-switch__slider::before {
+  transform: translateX(24px);
+  background-color: #fbbf24;
+  box-shadow: 0 0 8px #f59e0b, 0 0 16px rgba(251, 191, 36, 0.7);
+  filter: none;
+}
+
+/* Accessible visible focus ring */
+.theme-switch input:focus-visible + .theme-switch__slider {
+  outline: 2px solid var(--accent-primary, #06b6d4);
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .theme-switch__slider,
+  .theme-switch__slider::before,
+  .theme-switch__slider::after {
+    transition: none !important;
+  }
+}
