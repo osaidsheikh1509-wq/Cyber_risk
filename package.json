@@ -4,7 +4,7 @@
   "private": true,
   "description": "Cyber Risk Tracker with Real-Time Threat Intelligence & Sarvam AI Voice Briefings",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build",
-    "dev": "cd frontend && npm run dev"
+    "build": "node build.js",
+    "dev": "npm run dev --prefix frontend"
   }
 }
